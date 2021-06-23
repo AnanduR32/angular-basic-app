@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +12,14 @@ export class LoginComponent implements OnInit {
 
   user;
   pass;
-  showAlertBool = false;
+  showAlertBool;
   constructor(
     private auth:AuthServiceService,
     private route: Router
   ) {
     this.user = ''
     this.pass = ''
+    this.showAlertBool = false
    }
 
   ngOnInit(): void {

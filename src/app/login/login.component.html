@@ -4,10 +4,11 @@
         <label>
             name: 
         </label>
-        <input type="text">
+        <input [(NgModel)]='user' type="text">
         <label>
             pass: 
         </label>
-        <input type="password">
+        <input [(NgModel)]='pass' type="password">
+        <input type="button" (click)='loginSubmit()'>
     </form>
 </div>
