@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   user: any;
   pass;
   showAlertBool;
+
   constructor(
     private auth: AuthServiceService,
     private route: Router
@@ -25,8 +26,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  loginSubmit() {
-    if (this.auth.userAuth(this.user, this.pass) === 'True') {
+  async loginSubmit() {
+    if (await this.auth.userAuth(this.user, this.pass) === 'True') {
       this.route.navigateByUrl('/homepage', { state: this.user });
     }
     else {
