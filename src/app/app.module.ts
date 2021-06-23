@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthServiceService } from './services/auth-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserGetService } from './services/user-get.service';
 
 
 @NgModule({
@@ -21,7 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthServiceService],
+  providers: [
+    AuthServiceService,
+    UserGetService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

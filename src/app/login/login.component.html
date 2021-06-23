@@ -3,11 +3,11 @@
         <label>
             name:
         </label>
-        <input [(NgModel)]='user' type="text">
+        <input name= 'user' [(ngModel)]='user' type="text">
         <label>
             pass:
         </label>
-        <input [(NgModel)]='pass' type="password">
+        <input name = 'pass' [(ngModel)]='pass' type="password">
         <div *ngIf='showAlertBool'>User not authenticated</div>
         <input type="button" value="Submit" (click)='loginSubmit()'>
     </form>
