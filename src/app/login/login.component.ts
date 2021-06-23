@@ -28,11 +28,10 @@ export class LoginComponent implements OnInit {
 
   async loginSubmit() {
     if (await this.auth.userAuth(this.user, this.pass) === 'True') {
-      this.route.navigateByUrl('/homepage', { state: this.user });
+      this.route.navigateByUrl('/home', { state: this.user });
     }
     else {
       this.showAlertBool = true;
     }
   }
-
 }
