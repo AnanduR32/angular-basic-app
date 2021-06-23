@@ -1,5 +1,5 @@
 <div *ngIf='showAlertBool'>only displayed when showAlertBool is True</div>
-<div class = loginFormContainer>
+<div *ngIf='!showAlertBool' class = loginFormContainer>
     <form>
         <label>
             name: 
