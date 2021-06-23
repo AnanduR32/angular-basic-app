@@ -1,14 +1,14 @@
-<div class = loginFormContainer>
+<div class=loginFormContainer>
     <form>
         <label>
-            name: 
+            name:
         </label>
         <input [(NgModel)]='user' type="text">
         <label>
-            pass: 
+            pass:
         </label>
         <input [(NgModel)]='pass' type="password">
         <div *ngIf='showAlertBool'>User not authenticated</div>
-        <input type="button" (click)='loginSubmit()'>
+        <input type="button" value="Submit" (click)='loginSubmit()'>
     </form>
 </div>

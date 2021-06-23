@@ -14,22 +14,22 @@ export class LoginComponent implements OnInit {
   pass;
   showAlertBool;
   constructor(
-    private auth:AuthServiceService,
+    private auth: AuthServiceService,
     private route: Router
   ) {
     this.user = ''
     this.pass = ''
     this.showAlertBool = false
-   }
+  }
 
   ngOnInit(): void {
   }
 
-  loginSubmit(){
-    if(this.auth.userAuth(this.user,this.pass)==='True'){
+  loginSubmit() {
+    if (this.auth.userAuth(this.user, this.pass) === 'True') {
       this.route.navigateByUrl('/homepage');
     }
-    else{
+    else {
       this.showAlertBool = true;
     }
   }
