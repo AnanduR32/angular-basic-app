@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  user;
+  user: any;
   pass;
   showAlertBool;
   constructor(
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   loginSubmit() {
     if (this.auth.userAuth(this.user, this.pass) === 'True') {
-      this.route.navigateByUrl('/homepage');
+      this.route.navigateByUrl('/homepage', { state: this.user });
     }
     else {
       this.showAlertBool = true;
