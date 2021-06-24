@@ -8,7 +8,7 @@ export class UserGetService {
   constructor() {
   }
   async getUserDetails(user: string) {
-    await fetch('192.168.1.4:8080/userdetails/json?user=' + user).then((response) => { this.userDetails = response })
+    await fetch('192.168.1.4:8080/userdetails?user=' + user).then((response) => { this.userDetails = response.json() })
     return this.userDetails;
   }
 }
