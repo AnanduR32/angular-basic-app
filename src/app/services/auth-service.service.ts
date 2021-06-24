@@ -9,7 +9,10 @@ export class AuthServiceService {
 
   response: any
   userAuth(user: string, pass: string) {
-    fetch('192.168.1.4:8080/auth/json?user=' + user + '&pass=' + pass).then((response) => { this.response = response })
-    return (this.response[0])
+    console.log(this.response)
+    //  fetch('192.168.1.4:8080/auth/json?user=' + user + '&pass=' + pass).then((response) => { this.response = response })
+    fetch('192.168.1.4:8080/get/').then((response) => { this.response = response })
+    console.log(this.response)
+    return (this.response)
   }
 }
