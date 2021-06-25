@@ -27,8 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   async loginSubmit() {
-    if (await this.auth.userAuth(this.username, this.password) === 'True') {
-      this.route.navigateByUrl('/home', { state: this.username });
+    const response = await this.auth.userAuth(this.username, this.password) 
+    if (response[0] === true) {
+      this.route.navigateByUrl('/home', { state: response[1] });
     }
     else {
       this.showAlertBool = true;
