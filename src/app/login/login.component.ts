@@ -10,16 +10,16 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  user: any;
-  pass;
+  username: any;
+  password;
   showAlertBool;
 
   constructor(
     private auth: AuthServiceService,
     private route: Router
   ) {
-    this.user = ''
-    this.pass = ''
+    this.username = ''
+    this.password = ''
     this.showAlertBool = false
   }
 
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   }
 
   async loginSubmit() {
-    if (await this.auth.userAuth(this.user, this.pass) === 'True') {
-      this.route.navigateByUrl('/home', { state: this.user });
+    if (await this.auth.userAuth(this.username, this.password) === 'True') {
+      this.route.navigateByUrl('/home', { state: this.username });
     }
     else {
       this.showAlertBool = true;

@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class AuthServiceService {
 
-  constructor() { }
+  constructor(){}
 
   response: any
-  async userAuth(user: string, pass: string) {
-    console.log(this.response)
-     fetch('192.168.1.4:8080/auth?user=' + user + '&pass=' + pass).then((response) => { this.response = response.json() })
-    console.log(this.response)
-    return (this.response)
-  }
-}
+  async userAuth(username: string, password: string) {
+
+     fetch('http://192.168.1.4:8080/auth?username=' + username + '&password=' + password).then((response) =>
+      { this.response = response.text() })
+     return (this.response)
+   }
+ }
