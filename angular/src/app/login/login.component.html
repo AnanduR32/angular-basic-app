@@ -1,14 +1,33 @@
-<div class=loginFormContainer>
-    <form>
-        <label>
-            username:
-        </label>
-        <input name= 'username' [(ngModel)]='username' type="text">
-        <label>
-            password:
-        </label>
-        <input name = 'password' [(ngModel)]='password' type="password">
-        <div *ngIf='showAlertBool'>User not authenticated</div>
-        <input type="button" value="Submit" (click)='loginSubmit()'>
-    </form>
+<div class="loginContainerWrapper">
+    <div class="sidebar"></div>
+    <div class="loginFormContainer">
+        <div class="sidebar">
+        </div>
+        <form class = "loginForm">
+            <div class="loginFormInput">
+                <div class = "loginFormBox">
+                    <label>
+                        username
+                    </label>
+                    <input name= 'username' [(ngModel)]='username' type="text">
+                </div>
+                <div class = "loginFormBox">
+                    <label>
+                        password
+                    </label>
+                    <input name = 'password' [(ngModel)]='password' type="password">
+                </div>
+            </div>    
+            <div *ngIf='showAlertBool'>User not authenticated</div>
+            <div class = "submitButtonContainer">
+                <div class="sidebar"></div>
+                <input *ngIf="!submitted" class = "submitButton" type="button" value="Submit" (click)='loginSubmit()'>
+                <div *ngIf="submitted" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <div class="sidebar"></div>
+            </div>       
+        </form>
+        <div class = "sidebar">
+        </div>
+    </div>
+    <div class="sidebar"></div>
 </div>

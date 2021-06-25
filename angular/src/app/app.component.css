@@ -1,0 +1,20 @@
+.content-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin: 52px auto 64px;
+}
+.content-box{
+    padding: 1em auto 1em;
+    max-width: 768px;
+    width: 80%;
+    min-width: 400px;
+    height: auto;
+    margin-left: 2em;
+    margin-right: 2em;
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+
+}

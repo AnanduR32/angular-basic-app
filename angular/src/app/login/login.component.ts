@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   username: any;
   password;
   showAlertBool;
+  submitted;
 
   constructor(
     private auth: AuthServiceService,
@@ -20,13 +21,19 @@ export class LoginComponent implements OnInit {
   ) {
     this.username = ''
     this.password = ''
+    this.submitted = false
     this.showAlertBool = false
   }
 
   ngOnInit(): void {
   }
-
+  delay(ms:number){
+    return new Promise(resolve => setTimeout(resolve,ms))
+  }
+  
   async loginSubmit() {
+    this.submitted = true;
+    await this.delay(350);
     const response = await this.auth.userAuth(this.username, this.password) 
     if (response[0] === true) {
       this.route.navigateByUrl('/home', { state: response[1] });
@@ -34,5 +41,6 @@ export class LoginComponent implements OnInit {
     else {
       this.showAlertBool = true;
     }
+    this.submitted = false;
   }
 }
