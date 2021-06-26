@@ -1,4 +1,3 @@
-
 from flask import Flask,request,jsonify
 import psycopg2
 app = Flask(__name__)
@@ -101,7 +100,11 @@ def userdetails():
             print("Failed to obtain record from student",error)
             return jsonify(message='Method not allowed',status=405),405
 
-
+@app.after_request 
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 
