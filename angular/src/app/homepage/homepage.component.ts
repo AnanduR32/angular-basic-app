@@ -34,7 +34,7 @@ export class HomepageComponent implements OnInit {
     }
     else {
       this.fetchDetails()
-      this.displayToken = this.auth.accessToken!;
+      this.displayToken = this.auth.getAccessToken()!;
     }
   }
 

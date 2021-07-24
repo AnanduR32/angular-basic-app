@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.auth.userAuth(this.username, this.password).subscribe(data=>{
       this.tokenParam = data;
-      this.auth.accessToken = this.tokenParam.content?.token;
+      this.auth.setAccessToken(this.tokenParam.content?.token!);
       if (this.tokenParam['status'] === 1) {
         this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
       }

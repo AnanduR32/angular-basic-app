@@ -9,10 +9,7 @@ import { HttpClient } from '@angular/common/http'
 export class AuthServiceService {
 
   constructor(private http: HttpClient) {
-    this.accessToken = '';
   }
-
-  accessToken: string | undefined;
 
   userAuth(username: string, password: string): Observable<TokenParams> {
     const url = 'http://127.0.0.1:15681/authenticate';
@@ -20,4 +17,12 @@ export class AuthServiceService {
     let data = JSON.stringify({ 'user': username, 'pswd': password });
     return this.http.post(url, data, { 'headers': headers });
   }
+
+  setAccessToken(token: string) {
+    sessionStorage.setItem('token', token)
+  }
+  getAccessToken():string {
+    return(sessionStorage.getItem('token')||'Invalid');
+  }
+  
 }
