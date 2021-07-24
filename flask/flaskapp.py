@@ -5,9 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import exists
 from dataclasses import dataclass
 from datetime import datetime
+from functools import cache, lru_cache
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
@@ -33,7 +35,7 @@ class Auth(db.Model):
 def home():
   return 'Suggest API Home'
 
-
+@cache
 @app.route('/api/v1/fetchStudents', methods = ['GET'])
 def fetchStudents():
   students = StudentInfo.query.all()
@@ -46,6 +48,7 @@ def fetchStudents():
   ]
   return {"count": len(results), "Students": results}
 
+@lru_cache
 @app.route('/api/v1/fetchStudentById', methods = ['GET','POST'])
 def fetchStudentById():
   id = request.args['id']
@@ -96,12 +99,6 @@ def auth():
       return jsonify(False)
   except Exception as e:
     return({"error": e.args})
-
-@app.after_request 
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    return response
 
 if __name__ == '__main__':
   app.run(debug=True)
