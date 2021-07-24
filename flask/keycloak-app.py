@@ -25,8 +25,8 @@ def home():
 @app.route('/authenticate', methods=['GET', 'POST'])
 def authenticate():
     try:
-        user = request.args.get('user')
-        pswd = request.args.get('pswd')
+        user = request.json.get('user')
+        pswd = request.json.get('pswd')
         token = getToken(user, pswd)
         token_info = getTokenInfo(token['access_token'])
         content_json = {
@@ -108,4 +108,4 @@ pswd = 'admin1'
 # token = getToken(user,pswd)
 # print(token)
 if(__name__ == '__main__'):
-    app.run(debug=True)
+    app.run(debug=True, port='15681')

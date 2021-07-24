@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthServiceService } from '../shared/services/auth-service.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TokenParams } from '../shared/models/tokenParams';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   password;
   showAlertBool;
   submitted;
+  tokenParam:TokenParams;
 
   constructor(
     private auth: AuthServiceService,
@@ -23,24 +25,27 @@ export class LoginComponent implements OnInit {
     this.password = ''
     this.submitted = false
     this.showAlertBool = false
+    this.tokenParam = {code:'',content:{role:[],token:'',username:''},message:'',status:0}
   }
 
   ngOnInit(): void {
   }
-  delay(ms:number){
-    return new Promise(resolve => setTimeout(resolve,ms))
-  }
   
-  async loginSubmit() {
+  loginSubmit() {
     this.submitted = true;
-    await this.delay(350);
-    const response = await this.auth.userAuth(this.username, this.password) 
-    if (response[0] === true) {
-      this.route.navigateByUrl('/home', { state: response[1] });
-    }
-    else {
-      this.showAlertBool = true;
-    }
+    const response = this.auth.userAuth(this.username, this.password)
+    this.auth.userAuth(this.username, this.password).subscribe(data=>{
+      this.tokenParam = data;
+      this.auth.accessToken = this.tokenParam.content?.token;
+      console.log(this.tokenParam!);
+      if (this.tokenParam['status'] === 1) {
+        this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
+      }
+      else {
+        this.showAlertBool = true;
+      }
+    }); 
+    
     this.submitted = false;
   }
 }

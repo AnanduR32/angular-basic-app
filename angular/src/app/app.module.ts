@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { AuthServiceService } from './services/auth-service.service';
+import { AuthServiceService } from './shared/services/auth-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserGetService } from './services/user-get.service';
+import { UserGetService } from './shared/services/user-get.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -21,10 +22,11 @@ import { UserGetService } from './services/user-get.service';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [
     AuthServiceService,
-    UserGetService
+    UserGetService,
   ],
   bootstrap: [AppComponent]
 })

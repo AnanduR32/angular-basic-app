@@ -24,6 +24,7 @@ class StudentInfo(db.Model):
    _name = db.Column(db.String())
    department = db.Column(db.String())
    dob = db.Column(db.Date())
+   userid = db.Column(db.String())
 
 @dataclass(order=True)
 class Auth(db.Model):
@@ -41,7 +42,7 @@ def fetchStudents():
   students = StudentInfo.query.all()
   results = [
     {
-      "id": student._id,
+      "id": student.userid,
       "name": student._name,
       "department": student.department
     } for student in students
@@ -51,7 +52,8 @@ def fetchStudents():
 @lru_cache
 @app.route('/api/v1/fetchStudentById', methods = ['GET','POST'])
 def fetchStudentById():
-  id = request.args['id']
+  id = request.args['id'][4:]
+  print(id)
   student = StudentInfo.query.get_or_404(id)
   response = {
       "id": student._id,
@@ -101,7 +103,7 @@ def auth():
     return({"error": e.args})
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run(debug=True, port='15680')
 
 
    
