@@ -1,5 +1,5 @@
 from flask.globals import request
-from keycloak import KeycloakOpenID
+from keycloak import KeycloakOpenID, exceptions
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -24,10 +24,10 @@ def home():
 # Get Token
 @app.route('/authenticate', methods=['GET', 'POST'])
 def authenticate():
-    try:
-        user = request.json.get('user')
-        pswd = request.json.get('pswd')
-        token = getToken(user, pswd)
+    user = request.json.get('user')
+    pswd = request.json.get('pswd')
+    token, status = getToken(user, pswd)
+    if(status == 1):
         token_info = getTokenInfo(token['access_token'])
         content_json = {
             'username': user,
@@ -39,15 +39,17 @@ def authenticate():
             'content': content_json,
             'message': 'User is authenticated and authorized'
         }
-        return(final_json, 200)
-    except Exception as e:
+        code = 200
+        # return(final_json, 200)
+    else:
         final_json = {
             'code': 401,
             'status': 0,
             'content': "Unauthorized",
             'message': 'User is not authenticated'
         }
-        return(final_json, 401)
+        code = 200
+    return(final_json, code)
 
 
 def getTokenInfo(access_token):
@@ -59,12 +61,15 @@ def getTokenInfo(access_token):
 
 
 def getToken(user, pswd):
+    global token
     try:
-        global token
         token = keycloak_openid.token(user, pswd)
-        return(token)
-    except:
-        return('Failure!')
+        tmp = token
+        status = 1
+    except exceptions.KeycloakAuthenticationError as e:
+        tmp = []
+        status = 0
+    return(tmp, status)
 
 # Get Userinfo
 
