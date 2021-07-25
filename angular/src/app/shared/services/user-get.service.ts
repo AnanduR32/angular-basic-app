@@ -1,15 +1,25 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserGetService {
   userDetails: any;
-  constructor() {
+  constructor(private http: HttpClient) {
   }
-  async getUserDetails(user_id: string) {
-    const url = 'http://localhost:15680/api/v1/fetchStudentById?id=' + user_id
-    this.userDetails = await fetch(url).then((response) => { return response.json() })
-    return this.userDetails;
+  getUserDetails(user_id: string, accessToken: string) {
+    const headers = {
+      'content-type': 'application/json',
+      'access_key': accessToken,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*'
+    }
+    const url = 'http://localhost:15680/api/v1/fetchStudentById'
+    let data = JSON.stringify({ 'id': user_id[0] });
+    console.log(data)
+    // let response = this.http.post(url, data, { 'headers': headers }).toPromise()
+    return this.http.post(url, data, { 'headers': headers });
   }
 }

@@ -1,10 +1,10 @@
 from flask.globals import request
 from keycloak import KeycloakOpenID, exceptions
 from flask import Flask, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 # Configure client
@@ -23,6 +23,7 @@ def home():
 
 # Get Token
 @app.route('/authenticate', methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
 def authenticate():
     user = request.json.get('user')
     pswd = request.json.get('pswd')
@@ -103,10 +104,12 @@ def logout():
     except:
         return('Failure!')
 
-# @app.after_request
+# @app.after_request 
 # def after_request(response):
-#     return(jsonify(response))
-
+#     header = response.headers
+#     header['Access-Control-Allow-Origin'] = '*'
+#     header['Access-Control-Allow-Headers'] = '*'
+#     return response
 
 user = 'user1'
 pswd = 'admin1'

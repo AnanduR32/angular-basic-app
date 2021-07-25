@@ -12,7 +12,7 @@ import { AuthServiceService } from '../shared/services/auth-service.service';
 export class HomepageComponent implements OnInit {
   user_id: any;
   userDetails: any = {};
-  displayToken: string;
+  accessToken: string;
   constructor(
     private userDetailService: UserGetService,
     private route: Router,
@@ -20,21 +20,22 @@ export class HomepageComponent implements OnInit {
     private auth: AuthServiceService
   ) {
     this.user_id = this.route.getCurrentNavigation()?.extras.state
-    this.displayToken = '';
+    this.accessToken = '';
   }
 
   async fetchDetails() {
-    this.userDetails = await this.userDetailService.getUserDetails(this.user_id).then((res) => {
-      return res;
+    this.userDetails = this.userDetailService.getUserDetails(this.user_id, this.accessToken).subscribe(data=>{
+      this.userDetails = data
     })
   }
   ngOnInit(): void {
+    this.accessToken = this.auth.getAccessToken()!
     if (this.user_id === undefined) {
       this._location.back()
     }
-    else {
+    else if (this.accessToken !== 'null') {
+      console.log(this.accessToken)
       this.fetchDetails()
-      this.displayToken = this.auth.getAccessToken()!;
     }
   }
 
