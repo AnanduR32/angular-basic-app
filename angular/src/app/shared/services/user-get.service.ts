@@ -18,7 +18,6 @@ export class UserGetService {
     }
     const url = 'http://localhost:15680/api/v1/fetchStudentById'
     let data = JSON.stringify({ 'id': user_id[0] });
-    console.log(data)
     // let response = this.http.post(url, data, { 'headers': headers }).toPromise()
     return this.http.post(url, data, { 'headers': headers });
   }

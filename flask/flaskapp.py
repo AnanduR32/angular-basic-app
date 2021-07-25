@@ -59,7 +59,6 @@ def fetchStudents():
 @app.route('/api/v1/fetchStudentById', methods=['GET', 'POST'])
 def fetchStudentById():
     id = request.json.get('id')[4:]
-    print('ID is : '+id)
     student = StudentInfo.query.get_or_404(id)
     response = {
         "id": student._id,

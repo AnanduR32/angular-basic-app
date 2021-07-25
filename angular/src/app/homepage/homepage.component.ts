@@ -34,7 +34,6 @@ export class HomepageComponent implements OnInit {
       this._location.back()
     }
     else if (this.accessToken !== 'null') {
-      console.log(this.accessToken)
       this.fetchDetails()
     }
   }
