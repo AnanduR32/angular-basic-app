@@ -8,7 +8,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { AuthServiceService } from './shared/services/auth-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserGetService } from './shared/services/user-get.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HeaderModifierInterceptor } from './shared/interceptors/header-modifier.interceptor';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     AuthServiceService,
     UserGetService,
+    {provide: HTTP_INTERCEPTORS, useClass: HeaderModifierInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

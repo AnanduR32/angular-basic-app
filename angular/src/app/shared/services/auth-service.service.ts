@@ -42,9 +42,8 @@ export class AuthServiceService {
 
   userAuth(username: string, password: string): Observable<TokenParams> {
     const url = 'http://127.0.0.1:15681/authenticate';
-    const headers = { 'content-type': 'application/json' }
     let data = JSON.stringify({ 'user': username, 'pswd': password });
-    return this.http.post(url, data, { 'headers': headers });
+    return this.http.post(url, data);
   }
 
   setAccessToken(token: string) {
