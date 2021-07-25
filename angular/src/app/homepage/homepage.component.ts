@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserGetService } from '../shared/services/user-get.service';
 import { Location } from '@angular/common';
@@ -24,7 +24,7 @@ export class HomepageComponent implements OnInit {
   }
 
   async fetchDetails() {
-    this.userDetails = this.userDetailService.getUserDetails(this.user_id, this.accessToken).subscribe(data=>{
+    this.userDetails = this.userDetailService.getUserDetails(this.user_id, this.accessToken).subscribe(data => {
       this.userDetails = data
     })
   }
@@ -35,6 +35,20 @@ export class HomepageComponent implements OnInit {
     }
     else if (this.accessToken !== 'null') {
       this.fetchDetails()
+      this.auth.setActive()
+
+    }
+  }
+  signOut() {
+    this.auth.signOut()
+    this.route.navigateByUrl('')
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event: Event) {
+    //     // Your logic on beforeunload
+    // }  ngOnDestroy(): void {
+    if (this.auth.setInactive()) {
+      this.signOut()
     }
   }
 

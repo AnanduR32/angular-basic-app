@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.auth.getAccessToken()!=null){
+      let username = localStorage.getItem('username')
+      this.route.navigateByUrl('/home', { state: [username] });
+    }
   }
   
   loginSubmit() {
@@ -36,6 +40,7 @@ export class LoginComponent implements OnInit {
     this.auth.userAuth(this.username, this.password).subscribe(data=>{
       this.tokenParam = data;
       this.auth.setAccessToken(this.tokenParam.content?.token!);
+      localStorage.setItem('username',this.tokenParam['content']!['username']!)
       if (this.tokenParam['status'] === 1) {
         this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
       }

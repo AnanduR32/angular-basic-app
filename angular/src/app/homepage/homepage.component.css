@@ -1,0 +1,5 @@
+div>p{
+    flex-wrap: wrap;
+    overflow: auto;
+    word-wrap: break-word;    
+}

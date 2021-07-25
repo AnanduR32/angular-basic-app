@@ -1,4 +1,16 @@
-<div >{{userDetails.id}}</div>
-<div >{{userDetails.name}}</div>
-<div >{{userDetails.department}}</div>
-<div> {{accessToken}}</div>
+<div>
+  <p>{{ userDetails.id }}</p>
+</div>
+<div>
+  <p>{{ userDetails.name }}</p>
+</div>
+<div>
+  <p>{{ userDetails.department }}</p>
+</div>
+<div>
+  <p>{{ accessToken }}</p>
+</div>
+
+<div>
+  <input type = "button" (click)="signOut()" value="Sign Out">
+</div>
