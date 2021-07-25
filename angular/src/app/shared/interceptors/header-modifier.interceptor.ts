@@ -23,8 +23,6 @@ export class HeaderModifierInterceptor implements HttpInterceptor {
     const modifiedRequest = request.clone({
       headers: request.headers.set('content-type','application/json').set('access_key',this.auth.getAccessToken()||'Unauthorized')
     })
-    
-    console.log(modifiedRequest.headers)
     return next.handle(modifiedRequest);
   }
 }
