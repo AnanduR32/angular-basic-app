@@ -117,5 +117,9 @@ def auth():
 #     response.headers['Access-Control-Allow-Headers'] = '*'
 #     return response
 
+@app.before_request
+def before_request():
+    access_key = request.headers.get('access_key')
+
 if __name__ == '__main__':
     app.run(debug=True, port='15680')
