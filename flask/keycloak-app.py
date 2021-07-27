@@ -17,8 +17,6 @@ keycloak_openid = KeycloakOpenID(
 )
 
 # Home
-
-
 @app.route('/')
 def home():
     return("Home")
