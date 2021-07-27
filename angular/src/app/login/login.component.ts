@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   password;
   showAlertBool;
   submitted;
-  tokenParam:TokenParams;
+  tokenParam: TokenParams;
 
   constructor(
     private auth: AuthServiceService,
@@ -25,30 +25,34 @@ export class LoginComponent implements OnInit {
     this.password = ''
     this.submitted = false
     this.showAlertBool = false
-    this.tokenParam = {code:'',content:{role:[],token:'',username:''},message:'',status:0}
+    this.tokenParam = { code: '', content: { role: [], token: '', username: '' }, message: '', status: 0 }
   }
 
   ngOnInit(): void {
-    if(this.auth.getAccessToken()!=null){
+    if (this.auth.getAccessToken() != null) {
       let username = localStorage.getItem('username')
       this.route.navigateByUrl('/home', { state: [username] });
     }
   }
-  
+
   loginSubmit() {
     this.submitted = true;
-    this.auth.userAuth(this.username, this.password).subscribe(data=>{
-      this.tokenParam = data;
-      this.auth.setAccessToken(this.tokenParam.content?.token!);
-      localStorage.setItem('username',this.tokenParam['content']!['username']!)
-      if (this.tokenParam['status'] === 1) {
-        this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
+    this.auth.userAuth(this.username, this.password).subscribe(
+      (data) => {
+        this.tokenParam = data;
+        this.auth.setAccessToken(this.tokenParam.content?.token!);
+        localStorage.setItem('username', this.tokenParam['content']!['username']!)
+        if (this.tokenParam['status'] === 1) {
+          this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
+        }
+        else {
+          this.showAlertBool = true;
+        }
+      },
+      (error) => {
+        alert(`Invalid Login\n${error}`)
       }
-      else {
-        this.showAlertBool = true;
-      }
-    }); 
-    
+    );
     this.submitted = false;
   }
 }
