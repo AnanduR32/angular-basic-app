@@ -3,6 +3,7 @@ import { AuthServiceService } from '../shared/services/auth-service.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenParams } from '../shared/models/tokenParams';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -42,15 +43,12 @@ export class LoginComponent implements OnInit {
         this.tokenParam = data;
         this.auth.setAccessToken(this.tokenParam.content?.token!);
         localStorage.setItem('username', this.tokenParam['content']!['username']!)
-        if (this.tokenParam['status'] === 1) {
-          this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
-        }
-        else {
-          this.showAlertBool = true;
-        }
+        this.route.navigateByUrl('/home', { state: [this.tokenParam['content']!['username']] });
       },
-      (error) => {
-        alert(`Invalid Login\n${error}`)
+      (error: HttpErrorResponse) => {
+        alert(`Invalid Login\n${error.message}`)
+        this.showAlertBool = true;
+
       }
     );
     this.submitted = false;

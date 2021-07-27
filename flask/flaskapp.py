@@ -1,6 +1,6 @@
 from os import read
 from flask import Flask,  request, jsonify
-from data import *
+from data import POSTGRES
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import exists
 from dataclasses import dataclass

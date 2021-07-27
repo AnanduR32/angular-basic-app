@@ -2,16 +2,19 @@ from flask.globals import request
 from keycloak import KeycloakOpenID, exceptions
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
+from data import KEYCLOAK
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 # Configure client
-keycloak_openid = KeycloakOpenID(server_url="http://localhost:8080/auth/",
-                                 client_id="school-client",
-                                 realm_name="school",
-                                 client_secret_key="3957ff87-e2ba-4f9c-a79e-a9f79f97c3a7")
+keycloak_openid = KeycloakOpenID(
+    server_url=KEYCLOAK['server_url'],
+    client_id=KEYCLOAK['client_id'],
+    realm_name=KEYCLOAK['realm_name'],
+    client_secret_key=KEYCLOAK['client_secret_key']
+)
 
 # Home
 
@@ -27,8 +30,8 @@ def home():
 def authenticate():
     user = request.json.get('user')
     pswd = request.json.get('pswd')
-    token, status = getToken(user, pswd)
-    if(status == 1):
+    token = getToken(user, pswd)
+    try:
         token_info = getTokenInfo(token['access_token'])
         content_json = {
             'username': user,
@@ -40,17 +43,15 @@ def authenticate():
             'content': content_json,
             'message': 'User is authenticated and authorized'
         }
-        code = 200
-        # return(final_json, 200)
-    else:
+        return(final_json, 200)
+    except:
         final_json = {
             'code': 401,
             'status': 0,
             'content': "Unauthorized",
             'message': 'User is not authenticated'
         }
-        code = 200
-    return(final_json, code)
+        return(final_json, 401)
 
 
 def getTokenInfo(access_token):
@@ -63,14 +64,8 @@ def getTokenInfo(access_token):
 
 def getToken(user, pswd):
     global token
-    try:
-        token = keycloak_openid.token(user, pswd)
-        tmp = token
-        status = 1
-    except exceptions.KeycloakAuthenticationError as e:
-        tmp = []
-        status = 0
-    return(tmp, status)
+    token = keycloak_openid.token(user, pswd)
+    return(token)
 
 # Get Userinfo
 
@@ -104,12 +99,13 @@ def logout():
     except:
         return('Failure!')
 
-# @app.after_request 
+# @app.after_request
 # def after_request(response):
 #     header = response.headers
 #     header['Access-Control-Allow-Origin'] = '*'
 #     header['Access-Control-Allow-Headers'] = '*'
 #     return response
+
 
 user = 'user1'
 pswd = 'admin1'
